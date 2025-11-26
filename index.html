@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fafafa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        nav {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            font-size: 1.05em;
+        }
+
+        nav a:hover {
+            color: #ff6b6b;
+        }
+
+        .hero {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, #fff, #fafafa);
+        }
+
+        .profile-photo {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            border: 3px solid #ff6b6b;
+            overflow: hidden;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .stat-box .number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #ff6b6b;
+        }
+
+        .stat-box .label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        section {
+            padding: 80px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            text-align: center;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .about-container {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .about-container h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #ff6b6b;
+        }
+
+        .about-container p {
+            color: #555;
+            line-height: 1.9;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .info-box {
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .info-box .label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-box .value {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .skill-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .skill-icon {
+            font-size: 2.5em;
+        }
+
+        .skill-name {
+            color: #333;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .progress-container {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .skill-card:nth-child(1) .progress-fill { 
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+        }
+        
+        .skill-card:nth-child(2) .progress-fill { 
+            background: linear-gradient(90deg, #4ecdc4, #6ee7df);
+        }
+        
+        .skill-card:nth-child(3) .progress-fill { 
+            background: linear-gradient(90deg, #45b7d1, #69c9df);
+        }
+        
+        .skill-card:nth-child(4) .progress-fill { 
+            background: linear-gradient(90deg, #f9ca24, #fdd956);
+        }
+
+        .hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .hobby-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            font-size: 1.1em;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .hobby-card:hover {
+            transform: scale(1.05);
+        }
+
+        .hobby-card:nth-child(1) { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); color: white; }
+        .hobby-card:nth-child(2) { background: linear-gradient(135deg, #4ecdc4, #6ee7df); color: white; }
+        .hobby-card:nth-child(3) { background: linear-gradient(135deg, #45b7d1, #69c9df); color: white; }
+        .hobby-card:nth-child(4) { background: linear-gradient(135deg, #f9ca24, #fdd956); color: white; }
+        .hobby-card:nth-child(5) { background: linear-gradient(135deg, #a29bfe, #b8b3ff); color: white; }
+        .hobby-card:nth-child(6) { background: linear-gradient(135deg, #fd79a8, #ff9ec5); color: white; }
+
+        .learning-skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .learning-skill-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .learning-skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+
+        .learning-skill-card h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+
+        .learning-skill-card:nth-child(1) h3 { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); }
+        .learning-skill-card:nth-child(2) h3 { background: linear-gradient(135deg, #4ecdc4, #6ee7df); }
+        .learning-skill-card:nth-child(3) h3 { background: linear-gradient(135deg, #45b7d1, #69c9df); }
+        .learning-skill-card:nth-child(4) h3 { background: linear-gradient(135deg, #f9ca24, #fdd956); }
+        .learning-skill-card:nth-child(5) h3 { background: linear-gradient(135deg, #a29bfe, #b8b3ff); }
+        .learning-skill-card:nth-child(6) h3 { background: linear-gradient(135deg, #fd79a8, #ff9ec5); }
+
+        .learning-skill-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .learning-skill-card li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .learning-skill-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .learning-progress {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .learning-progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .learning-progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .learning-progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .learning-skill-card:nth-child(1) .learning-progress-fill { 
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+        }
+        
+        .learning-skill-card:nth-child(2) .learning-progress-fill { 
+            background: linear-gradient(90deg, #4ecdc4, #6ee7df);
+        }
+        
+        .learning-skill-card:nth-child(3) .learning-progress-fill { 
+            background: linear-gradient(90deg, #45b7d1, #69c9df);
+        }
+        
+        .learning-skill-card:nth-child(4) .learning-progress-fill { 
+            background: linear-gradient(90deg, #f9ca24, #fdd956);
+        }
+        
+        .learning-skill-card:nth-child(5) .learning-progress-fill { 
+            background: linear-gradient(90deg, #a29bfe, #b8b3ff);
+        }
+        
+        .learning-skill-card:nth-child(6) .learning-progress-fill { 
+            background: linear-gradient(90deg, #fd79a8, #ff9ec5);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .portfolio-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 3px solid #ff6b6b;
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .portfolio-placeholder {
+            color: #ccc;
+            font-size: 3em;
+        }
+
+        .portfolio-content {
+            padding: 25px;
+        }
+
+        .portfolio-content h3 {
+            color: #333;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .portfolio-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .portfolio-tag {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
+
+        .goals-container {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .goals-container h3 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #ff6b6b;
+        }
+
+        .goals-container p {
+            font-size: 1.15em;
+            line-height: 1.9;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2em;
+            }
+
+            nav ul {
+                gap: 20px;
+                font-size: 0.95em;
+            }
+
+            .about-container {
+                padding: 30px;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#learning-skills">Learning Skills</a></li>
+            <li><a href="#hobbies">Hobbies</a></li>
+            <li><a href="#goals">Goals</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="profile-photo">
+            <img src="https://via.placeholder.com/160" alt="Your Photo">
+        </div>
+        <h1>Your Name Here</h1>
+        <p class="subtitle">Student • Creator • Learner</p>
+        <div class="hero-stats">
+            <div class="stat-box">
+                <div class="number">12</div>
+                <div class="label">Years Old</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">6th</div>
+                <div class="label">Grade</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">4+</div>
+                <div class="label">Skills</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-container">
+            <h3>Hello! Nice to Meet You</h3>
+            <p>Write your bio here. Tell everyone about yourself, your interests, and what makes you unique! Share your story and what you're passionate about learning.</p>
+            
+            <div class="info-grid">
+                <div class="info-box">
+                    <div class="label">Favorite Subject</div>
+                    <div class="value">Computer Science</div>
+                </div>
+                <div class="info-box">
+                    <div class="label">School</div>
+                    <div class="value">Your School Name</div>
+                </div>
+                <div class="info-box">
+                    <div class="label">Favorite Color</div>
+                    <div class="value">Blue</div>
+                </div>
+                <div class="info-box">
+                    <div class="label">Dream Job</div>
+                    <div class="value">Software Developer</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <h2 class="section-title">My Portfolio</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <img src="https://via.placeholder.com/400x300" alt="Project 1">
+                </div>
+                <div class="portfolio-content">
+                    <h3>Website Project</h3>
+                    <p>My first website built with HTML and CSS. A personal portfolio showcasing my learning journey.</p>
+                    <span class="portfolio-tag">Project</span>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <img src="https://via.placeholder.com/400x300" alt="Certification 1">
+                </div>
+                <div class="portfolio-content">
+                    <h3>HTML Certification</h3>
+                    <p>Completed online course on HTML fundamentals and best practices.</p>
+                    <span class="portfolio-tag">Certificate</span>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <img src="https://via.placeholder.com/400x300" alt="Project 2">
+                </div>
+                <div class="portfolio-content">
+                    <h3>Game Design</h3>
+                    <p>Created a simple interactive game using JavaScript and learned about game logic.</p>
+                    <span class="portfolio-tag">Project</span>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <img src="https://via.placeholder.com/400x300" alt="Certification 2">
+                </div>
+                <div class="portfolio-content">
+                    <h3>CSS Certification</h3>
+                    <p>Advanced CSS course completion certificate covering animations and responsive design.</p>
+                    <span class="portfolio-tag">Certificate</span>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <img src="https://via.placeholder.com/400x300" alt="Project 3">
+                </div>
+                <div class="portfolio-content">
+                    <h3>Art Gallery</h3>
+                    <p>Digital art gallery showcasing my creative work and design skills.</p>
+                    <span class="portfolio-tag">Project</span>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <img src="https://via.placeholder.com/400x300" alt="Project 4">
+                </div>
+                <div class="portfolio-content">
+                    <h3>School Project</h3>
+                    <p>Collaborative school project presentation and documentation.</p>
+                    <span class="portfolio-tag">Project</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title">My Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-header">
+                    <div class="skill-icon">💻</div>
+                    <div class="skill-name">HTML & CSS</div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Level</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-header">
+                    <div class="skill-icon">⚡</div>
+                    <div class="skill-name">JavaScript</div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Level</span>
+                        <span>70%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 70%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-header">
+                    <div class="skill-icon">🧩</div>
+                    <div class="skill-name">Problem Solving</div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Level</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 90%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-header">
+                    <div class="skill-icon">🎨</div>
+                    <div class="skill-name">Creative Design</div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Level</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learning-skills">
+        <h2 class="section-title">Learning Skills & Work Habits</h2>
+        <div class="learning-skills-grid">
+            <div class="learning-skill-card">
+                <h3>Responsibility</h3>
+                <ul>
+                    <li>Fulfils responsibilities and commitments within the learning environment</li>
+                    <li>Completes and submits class work, homework, and assignments according to agreed-upon timelines</li>
+                    <li>Takes responsibility for and manages own behaviour</li>
+                </ul>
+                <div class="learning-progress">
+                    <div class="learning-progress-label">
+                        <span>Rating</span>
+                        <span>Excellent</span>
+                    </div>
+                    <div class="learning-progress-bar">
+                        <div class="learning-progress-fill" style="width: 90%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="learning-skill-card">
+                <h3>Organization</h3>
+                <ul>
+                    <li>Devises and follows a plan and process for completing work and tasks</li>
+                    <li>Establishes priorities and manages time to complete tasks and achieve goals</li>
+                    <li>Identifies, gathers, evaluates, and uses information, technology, and resources to complete tasks</li>
+                </ul>
+                <div class="learning-progress">
+                    <div class="learning-progress-label">
+                        <span>Rating</span>
+                        <span>Good</span>
+                    </div>
+                    <div class="learning-progress-bar">
+                        <div class="learning-progress-fill" style="width: 80%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="learning-skill-card">
+                <h3>Independent Work</h3>
+                <ul>
+                    <li>Independently monitors, assesses, and revises plans to complete tasks and meet goals</li>
+                    <li>Uses class time appropriately to complete tasks</li>
+                    <li>Follows instructions with minimal supervision</li>
+                </ul>
+                <div class="learning-progress">
+                    <div class="learning-progress-label">
+                        <span>Rating</span>
+                        <span>Excellent</span>
+                    </div>
+                    <div class="learning-progress-bar">
+                        <div class="learning-progress-fill" style="width: 95%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="learning-skill-card">
+                <h3>Collaboration</h3>
+                <ul>
+                    <li>Accepts various roles and an equitable share of work in a group</li>
+                    <li>Responds positively to the ideas, opinions, values, and traditions of others</li>
+                    <li>Builds healthy peer-to-peer relationships through personal and media-assisted interactions</li>
+                    <li>Works with others to resolve conflicts and build consensus to achieve group goals</li>
+                </ul>
+                <div class="learning-progress">
+                    <div class="learning-progress-label">
+                        <span>Rating</span>
+                        <span>Good</span>
+                    </div>
+                    <div class="learning-progress-bar">
+                        <div class="learning-progress-fill" style="width: 85%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="learning-skill-card">
+                <h3>Initiative</h3>
+                <ul>
+                    <li>Looks for and acts on new ideas and opportunities for learning</li>
+                    <li>Demonstrates the capacity for innovation and a willingness to take risks</li>
+                    <li>Demonstrates curiosity and interest in learning</li>
+                    <li>Approaches new tasks with a positive attitude</li>
+                    <li>Recognizes and advocates appropriately for the rights of self and others</li>
+                </ul>
+                <div class="learning-progress">
+                    <div class="learning-progress-label">
+                        <span>Rating</span>
+                        <span>Satisfactory</span>
+                    </div>
+                    <div class="learning-progress-bar">
+                        <div class="learning-progress-fill" style="width: 75%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="learning-skill-card">
+                <h3>Self-Regulation</h3>
+                <ul>
+                    <li>Sets own individual goals and monitors progress towards achieving them</li>
+                    <li>Seeks clarification or assistance when needed</li>
+                    <li>Assesses and reflects critically on own strengths, needs, and interests</li>
+                    <li>Identifies learning opportunities, choices, and strategies to meet personal needs and achieve goals</li>
+                    <li>Perseveres and makes an effort when responding to challenges</li>
+                </ul>
+                <div class="learning-progress">
+                    <div class="learning-progress-label">
+                        <span>Rating</span>
+                        <span>Excellent</span>
+                    </div>
+                    <div class="learning-progress-bar">
+                        <div class="learning-progress-fill" style="width: 92%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="hobbies">
+        <h2 class="section-title">My Hobbies</h2>
+        <div class="hobbies-grid">
+            <div class="hobby-card">🎮 Gaming</div>
+            <div class="hobby-card">📚 Reading</div>
+            <div class="hobby-card">⚽ Sports</div>
+            <div class="hobby-card">🎨 Drawing</div>
+            <div class="hobby-card">🎵 Music</div>
+            <div class="hobby-card">🎬 Movies</div>
+        </div>
+    </section>
+
+    <section id="goals">
+        <h2 class="section-title">My Goals</h2>
+        <div class="goals-container">
+            <h3>What I Want to Achieve</h3>
+            <p>Write about your goals and dreams here. What do you want to learn? What do you want to become? Share your aspirations and what motivates you to keep learning and growing every day.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>Made with ❤️ by Your Name | 2024</p>
+    </footer>
+</body>
+</html>
